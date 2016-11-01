@@ -1,0 +1,79 @@
+<div layout="row" layout-align="center center" layout-margin flex>
+    <md-card flex="40" flex-sm="80" flex-xs="90">
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Register</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <form ng-submit="vm.register()" name="registerForm">
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Full Name</label>
+                        <input ng-model="vm.user.fullname" name="fullname" required ng-pattern="/^[a-zA-Z0-9_\s]*$/"
+                               ng-minlength="3" ng-maxlength="30">
+                        <div ng-messages="registerForm.fullname.$error">
+                            <div ng-message="required">This is required.</div>
+                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                Your name cannot contain special characters and must be greater than 3 characters and
+                                less than 30 characters.
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Username</label>
+                        <input ng-model="vm.user.username" name="username" required ng-pattern="/^[a-zA-Z0-9_]*$/"
+                               ng-minlength="3" ng-maxlength="18">
+                        <div ng-messages="registerForm.username.$error">
+                            <div ng-message="required">This is required.</div>
+                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                Your username cannot contain special characters and must be greater than 3 characters
+                                and less than 30 characters.
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Email</label>
+                        <input ng-model="vm.user.email" type="email" required name="email" ng-pattern="/^.+@.+\..+$/"
+                               ng-minlength="10" ng-maxlength="100">
+                        <div ng-messages="registerForm.email.$error">
+                            <div ng-message="required">This is required.</div>
+                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                Your email must be between 10 and 100 characters long and look like an e-mail address.
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Password</label>
+                        <input ng-model="vm.user.password" type="password" required name="password" ng-minlength="8">
+                        <div ng-messages="registerForm.password.$error">
+                            <div ng-message="required">This is required.</div>
+                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                Your password must be at least 8 characters
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Confirm Password</label>
+                        <input ng-model="vm.user.confirm" type="password" required name="confirm"
+                               compare-to="vm.user.password">
+                        <div ng-messages="registerForm.confirm.$error">
+                            <div ng-message="required">This is required.</div>
+                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                Your password must be at least 8 characters
+                            </div>
+                            <div ng-message="compareTo">Passwords must match!</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <md-button class="md-raised md-primary" type="submit">Register</md-button>
+                </md-input-container>
+            </form>
+        </md-card-content>
+    </md-card>
+</div>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>MEAN Starterkit</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="/compass/sass/style.css">
+</head>
+<body ng-app="starterkit">
+
+<div layout="column" layout-fill class="content-wrapper">
+    <navigation></navigation>
+
+    <md-content flex>
+        <div ng-view="" autoscroll="true"></div>
+    </md-content>
+</div>
+
+
+<script src="/angular/angular.js"></script>
+<script src="/angular-animate/angular-animate.js"></script>
+<script src="/angular-aria/angular-aria.js"></script>
+<script src="/angular-messages/angular-messages.js"></script>
+<script src="/angular-route/angular-route.js"></script>
+<script src="/angular-material/angular-material.js"></script>
+
+
+<!--Main App-->
+<script src="main.js"></script>
+<script src="config.js"></script>
+
+<!--Controllers-->
+<script src="home/home.controller.js"></script>
+<script src="common/directives/navigation/navigation.controller.js"></script>
+<script src="auth/register/register.controller.js"></script>
+<script src="auth/login/login.controller.js"></script>
+<script src="profile/profile.controller.js"></script>
+<script src="profile/edit/edit.controller.js"></script>
+<script src="profile/password/password.controller.js"></script>
+<script src="members/members.controller.js"></script>
+
+<!--Directives-->
+<script src="common/directives/navigation/navigation.directive.js"></script>
+<script src="common/directives/compare-to.js"></script>
+
+<!--Services-->
+<script src="common/services/auth.service.js"></script>
+
+<!--Factories-->
+<script src="common/factories/fetch-user.js"></script>
+</body>
+</html>

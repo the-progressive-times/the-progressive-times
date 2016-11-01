@@ -1,0 +1,55 @@
+<md-toolbar class="md-hue-2">
+    <div class="md-toolbar-tools md-whiteframe-4dp">
+        <md-button class="md-icon-button" aria-label="Navigation">
+            <md-icon class="material-icons" ng-click="vm.toggleSidenav()">menu</md-icon>
+        </md-button>
+        <h2>
+            <a href="#/">MEAN Starterkit</a>
+        </h2>
+        <span flex></span>
+        <md-button aria-label="Log out" ng-click="vm.logout()" ng-show="vm.isLoggedIn">Log out</md-button>
+        <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="vm.toggleUsernav()">
+            <md-icon class="material-icons" md-menu-origin>account_circle</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+
+<md-sidenav
+        class="md-sidenav-right"
+        md-component-id="userNav">
+
+    <md-toolbar>
+        <h1 class="md-toolbar-tools">{{vm.user.username}}</h1>
+    </md-toolbar>
+    <md-content>
+        <md-list flex>
+            <md-list-item class="md-2-line" ng-repeat="item in vm.userNav" ng-href="{{item.path}}"
+                          ng-click="vm.toggleUsernav(); item.onClick()">
+                <md-icon class="material-icons">{{item.icon}}</md-icon>
+                <div class="md-list-item-text" layout="column">
+                    <h3>{{ item.location }}</h3>
+                </div>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</md-sidenav>
+
+<md-sidenav
+        class="md-sidenav-left"
+        md-whiteframe="4"
+        md-component-id="navigation">
+
+    <md-toolbar>
+        <h1 class="md-toolbar-tools">Navigation</h1>
+    </md-toolbar>
+    <md-content>
+        <md-list flex>
+            <md-list-item class="md-2-line" ng-repeat="item in vm.nav" ng-href="{{item.path}}" ng-click="vm.toggleSidenav()">
+                <md-icon class="material-icons">{{item.icon}}</md-icon>
+                <div class="md-list-item-text" layout="column">
+                    <h3>{{ item.location }}</h3>
+                </div>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</md-sidenav>

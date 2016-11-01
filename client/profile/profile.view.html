@@ -1,0 +1,33 @@
+<div layout="row" layout-align="center center">
+    <div flex="50" flex-sm="70" flex-xs="90">
+        <md-content>
+            <md-tabs md-border-bottom md-dynamic-height>
+                <md-tab label="you">
+                    <md-card theme="default">
+                        <img src="http://placekitten.com/600/500" class="md-card-image hide-xl hide-lg hide-md hide-sm">
+                        <md-card-title>
+                            <md-card-title-text>
+                                <span class="md-headline">{{vm.user.username}}</span>
+                                <span class="md-subhead">{{vm.user.fullname}}</span>
+                                <span class="md-subhead">{{vm.user.email}}</span>
+                            </md-card-title-text>
+                            <md-card-title-media>
+                                <div class="md-media-lg card-media hide-xs">
+                                    <img src="http://placekitten.com/200/200">
+                                </div>
+                            </md-card-title-media>
+                        </md-card-title>
+                        <md-card-content class="hide-xs">
+                            <md-button class="md-primary" ng-click="vm.editProfile()">Edit Profile</md-button>
+                            <md-button class="md-warn" ng-click="vm.changePassword()">Change Password</md-button>
+                        </md-card-content>
+                        <md-card-actions layout="column" layout-align="start" class="hide-xl hide-lg hide-md hide-sm">
+                            <md-button class="md-primary" ng-click="vm.editProfile()">Edit Profile</md-button>
+                            <md-button class="md-warn" ng-click="vm.changePassword()">Change Password</md-button>
+                        </md-card-actions>
+                    </md-card>
+                </md-tab>
+            </md-tabs>
+        </md-content>
+    </div>
+</div>

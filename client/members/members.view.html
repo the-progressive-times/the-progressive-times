@@ -1,0 +1,22 @@
+<div layout="row" layout-align="center start">
+    <div flex="90" layout="row" layout-wrap>
+        <div flex="33" flex-md="50" flex-sm="50" flex-xs="100" ng-repeat="user in vm.users">
+            <md-card>
+                <img src="http://placekitten.com/300/150" class="md-card-image hide-xl hide-lg hide-md">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">{{user.username}}</span>
+                        <span class="md-subhead">{{user.fullname}}</span>
+                        <span class="md-subhead">{{user.email}}</span>
+                        <span class="md-subhead">{{user.usertype}}</span>
+                    </md-card-title-text>
+                    <md-card-title-media>
+                        <div class="md-media-md card-media hide-sm hide-xs">
+                            <img src="http://placekitten.com/200/200">
+                        </div>
+                    </md-card-title-media>
+                </md-card-title>
+            </md-card>
+        </div>
+    </div>
+</div>

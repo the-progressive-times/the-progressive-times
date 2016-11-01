@@ -1,0 +1,32 @@
+<div layout="row" layout-align="center center" layout-margin flex>
+    <md-card flex="40" flex-xs="90">
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Log In</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <form ng-submit="vm.login()" name="loginForm">
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Email</label>
+                        <input ng-model="vm.user.email" name="email" required>
+                        <div ng-messages="loginForm.email.$error">
+                            <div ng-message="required">This is required.</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Password</label>
+                        <input ng-model="vm.user.password" name="password" type="password" required>
+                        <div ng-messages="loginForm.password.$error">
+                            <div ng-message="required">This is required.</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <md-button class="md-raised md-primary" type="submit">Login</md-button>
+                </md-input-container>
+            </form>
+        </md-card-content>
+    </md-card>
+</div>
