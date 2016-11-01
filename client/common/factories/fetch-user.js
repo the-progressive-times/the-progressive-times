@@ -3,7 +3,7 @@
  */
 
 (function () {
-    angular.module('starterkit')
+    angular.module('tpt')
         .factory('fetchUser', FetchUserFactory);
 
     FetchUserFactory.$inject = ['authentication'];

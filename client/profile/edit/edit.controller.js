@@ -1,5 +1,5 @@
 (function () {
-    angular.module('starterkit')
+    angular.module('tpt')
         .controller('EditController', EditController);
 
     EditController.$inject = ['$mdDialog', 'authentication', 'fetchUser', '$location', '$mdToast'];

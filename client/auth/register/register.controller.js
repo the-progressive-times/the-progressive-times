@@ -3,7 +3,7 @@
  */
 
 (function () {
-    angular.module('starterkit')
+    angular.module('tpt')
         .controller('RegisterController', RegisterController);
 
     RegisterController.$inject = ['$location', 'authentication', '$mdToast'];

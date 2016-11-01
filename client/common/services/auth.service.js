@@ -3,7 +3,7 @@
  */
 
 (function () {
-    angular.module('starterkit')
+    angular.module('tpt')
         .service('authentication', AuthenticationService);
 
     AuthenticationService.$inject = ['$http', '$window', '$route'];

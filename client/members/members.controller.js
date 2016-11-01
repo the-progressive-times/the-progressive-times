@@ -1,5 +1,5 @@
 (function () {
-    angular.module('starterkit')
+    angular.module('tpt')
         .controller('MemberController', MemberController);
 
     MemberController.$inject = ['fetchUser'];

@@ -3,7 +3,7 @@
  */
 (function () {
     angular
-        .module('starterkit')
+        .module('tpt')
         .controller('HomeController', HomeController);
 
     function HomeController() {

@@ -22,6 +22,6 @@
         };
     }
 
-    angular.module('starterkit')
+    angular.module('tpt')
         .directive('compareTo', compareTo)
 })();

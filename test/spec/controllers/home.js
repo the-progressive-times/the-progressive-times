@@ -3,7 +3,7 @@
 describe('Controller: HomeCtrl', function () {
 
     // Load the controller's module
-    beforeEach(module('starterkit'));
+    beforeEach(module('tpt'));
 
     var HomeCtrl,
         scope;

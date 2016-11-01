@@ -3,7 +3,7 @@
  */
 
 (function () {
-    angular.module('starterkit')
+    angular.module('tpt')
         .controller('NavigationController', NavigationController);
 
     NavigationController.$inject = ['$scope', '$route', '$location', '$mdSidenav', '$mdToast', 'authentication', 'fetchUser'];

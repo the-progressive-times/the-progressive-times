@@ -3,7 +3,7 @@
  */
 
 (function () {
-    angular.module('starterkit')
+    angular.module('tpt')
         .directive('navigation', NavigationDirective);
 
     function NavigationDirective() {

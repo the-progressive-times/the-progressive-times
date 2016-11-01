@@ -3,7 +3,7 @@
  */
 
 (function () {
-    angular.module('starterkit')
+    angular.module('tpt')
         .controller('ProfileController', ProfileController);
 
     ProfileController.$inject = ['fetchUser', '$routeParams', '$mdDialog'];

@@ -3,7 +3,7 @@
  */
 
 (function () {
-    angular.module('starterkit')
+    angular.module('tpt')
         .controller('LoginController', LoginController);
 
     LoginController.$inject = ['$location', 'authentication', '$mdToast'];

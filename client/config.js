@@ -1,5 +1,5 @@
 (function () {
-    angular.module('starterkit')
+    angular.module('tpt')
         .config(config);
 
     config.$inject = ['$routeProvider', '$mdThemingProvider'];
