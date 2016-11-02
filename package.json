@@ -42,7 +42,9 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "karma start test/karma.conf.js"
+    "init-config": "scripts/initConfig.js",
+    "start": "npm run init-config && node app.js",
+    "test": "npm run init-config && karma start test/karma.conf.js"
   },
   "dependencies": {
     "angular": "^1.5.8",
