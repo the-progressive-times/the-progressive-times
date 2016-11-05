@@ -16,8 +16,6 @@ function main() {
         let config = 'module.exports = ' + JSON.stringify(secretKeyRoot, null, 2) + ';';
 
         fs.writeFileSync(configJs, config);
-    } else {
-        console.log("Hello world!");
     }
 }
 
