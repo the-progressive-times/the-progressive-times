@@ -9,9 +9,11 @@ function main() {
     let configJs = __dirname + '/../server/config/config.js';
 
     if (!fileExists(configJs)) {
-        let config = 'module.exports = {' + "\n" +
-          '    ' + 'secretKey: ' + getRandomSalt() + "\n" +
-          '}';
+        let secretKeyRoot = {
+          'secretKey': getRandomSalt()
+        };
+
+        let config = 'module.exports = ' + JSON.stringify(secretKeyRoot, null, 2) + ';';
 
         fs.writeFileSync(configJs, config);
     } else {
