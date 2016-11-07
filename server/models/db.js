@@ -46,4 +46,4 @@ process.on('SIGTERM', function () {
     });
 });
 
-require('./userModel');
+require('./user');

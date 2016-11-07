@@ -4,38 +4,11 @@ var User = mongoose.model('User');
 var jwt = require('jsonwebtoken');
 var config = require('../config/config');
 var validate = require('../utilities/validate');
+var authenticate = require('../utilities/authenticate');
 
 var sendJSONResponse = function (res, status, content) {
     res.status(status);
     res.json(content);
-};
-
-var authenticate = function (req, res, callback) {
-    var auth = req.get('authorization').split(' ')[1];
-
-    jwt.verify(auth, config.secretKey, function (err, decoded) {
-        if (err) {
-            sendJSONResponse(res, 401, {
-                message: 'Your token is invalid.'
-            })
-        } else {
-            User.findById(decoded._id, function (err, user) {
-                if (err) {
-                    sendJSONResponse(res, 401, {
-                        message: 'Your token is invalid.'
-                    })
-                } else {
-                    if (user._id == req.payload._id && user.hash == req.payload.hash) {
-                        callback();
-                    } else {
-                        sendJSONResponse(res, 401, {
-                            message: 'Your token is invalid.'
-                        })
-                    }
-                }
-            })
-        }
-    })
 };
 
 module.exports.register = function (req, res) {
@@ -128,7 +101,7 @@ module.exports.login = function (req, res) {
             message: 'All fields required'
         });
     } else {
-        passport.authenticate('local', function (err, user, info) {
+        passport.checkToken('local', function (err, user, info) {
             var token;
             if (err) {
                 sendJSONResponse(res, 404, {
@@ -193,7 +166,7 @@ module.exports.edit = function (req, res) {
                         }
                     ]);
 
-                    authenticate(req, res, function () {
+                    authenticate.checkToken(req, res, function (user) {
                         if (passed) {
                             User.findByIdAndUpdate(req.payload._id, {
                                 $set: {
@@ -248,7 +221,7 @@ module.exports.changePassword = function (req, res) {
                         message: 'Unexpected error.'
                     })
                 } else if (user) {
-                    authenticate(req, res, function () {
+                    authenticate.checkToken(req, res, function (user) {
                         user.setPassword(req.body.password);
                         user.save(function (err, user) {
                             sendJSONResponse(res, 200, {
@@ -272,7 +245,7 @@ module.exports.changePassword = function (req, res) {
 };
 
 module.exports.validateToken = function (req, res) {
-    authenticate(req, res, function () {
+    authenticate.checkToken(req, res, function (user) {
         sendJSONResponse(res, 200, {
             message: 'Your token is valid.'
         })

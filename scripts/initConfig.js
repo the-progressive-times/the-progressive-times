@@ -10,7 +10,7 @@ function main() {
 
     if (!fileExists(configJs)) {
         let secretKeyRoot = {
-          'secretKey': getRandomSalt()
+            'secretKey': getRandomSalt()
         };
 
         let config = 'module.exports = ' + JSON.stringify(secretKeyRoot, null, 2) + ';';
