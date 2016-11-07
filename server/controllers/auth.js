@@ -101,7 +101,7 @@ module.exports.login = function (req, res) {
             message: 'All fields required'
         });
     } else {
-        passport.checkToken('local', function (err, user, info) {
+        passport.authenticate('local', function (err, user, info) {
             var token;
             if (err) {
                 sendJSONResponse(res, 404, {
