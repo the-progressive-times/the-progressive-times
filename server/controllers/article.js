@@ -4,6 +4,7 @@ var User = mongoose.model('User');
 var Article = mongoose.model('Article');
 var validate = require('../utilities/validate');
 var authenticate = require('../utilities/authenticate');
+var ranks = require('../config/user-ranks');
 
 var sendJSONResponse = function (res, status, content) {
     res.status(status);
@@ -11,7 +12,7 @@ var sendJSONResponse = function (res, status, content) {
 };
 
 module.exports.create = function (req, res) {
-    authenticate.checkRank(req, res, 3, function (user) {
+    authenticate.checkRank(req, res, ranks.REPORTER, function (user) {
         var passed = validate.validate([
             {
                 value: req.body.title,
@@ -53,4 +54,55 @@ module.exports.create = function (req, res) {
             })
         }
     });
+};
+
+module.exports.edit = function (req, res) {
+    authenticate.checkRank(req, res, ranks.REPORTER, function (user) {
+        var passed = validate.validate([
+            {
+                value: req.body.title,
+                checks: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 100
+                }
+            },
+            {
+                value: req.body.articleText,
+                checks: {
+                    required: true
+                }
+            }
+        ]);
+
+        if (passed) {
+            Article.findById(req.params.id, function (article) {
+                if (article.author == user._id) {
+                    Article.findOneAndUpdate(req.params.id, {
+                        $set: {
+                            title: req.body.title,
+                            articleText: req.body.articleText
+                        }
+                    }, function (article) {
+                        sendJSONResponse(res, 200, {
+                            message: 'Successfully updated the article!'
+                        })
+                    })
+                } else {
+                    authenticate.checkRank(req, res, ranks.EDITOR, function (user) {
+                        Article.findOneAndUpdate(req.params.id, {
+                            $set: {
+                                title: req.body.title,
+                                articleText: req.body.articleText
+                            }
+                        }, function (article) {
+                            sendJSONResponse(res, 200, {
+                                message: 'Successfully updated the article!'
+                            })
+                        })
+                    })
+                }
+            })
+        }
+    })
 };

@@ -8,27 +8,39 @@ var sendJSONResponse = function (res, status, content) {
     res.json(content);
 };
 
-module.exports.checkToken = function (req, res, callback) {
+module.exports.checkToken = function (req, res, successCallback, failureCallback) {
     var auth = req.get('authorization').split(' ')[1];
 
     jwt.verify(auth, config.secretKey, function (err, decoded) {
         if (err) {
-            sendJSONResponse(res, 401, {
-                message: 'Your token is invalid.'
-            })
+            if (failureCallback) {
+                failureCallback();
+            } else {
+                sendJSONResponse(res, 401, {
+                    message: 'Your token is invalid.'
+                })
+            }
         } else {
             User.findById(decoded._id, function (err, user) {
                 if (err) {
-                    sendJSONResponse(res, 401, {
-                        message: 'Your token is invalid.'
-                    })
-                } else {
-                    if (user && user.hash == req.payload.hash) {
-                        callback(user);
+                    if (failureCallback) {
+                        failureCallback();
                     } else {
                         sendJSONResponse(res, 401, {
                             message: 'Your token is invalid.'
                         })
+                    }
+                } else {
+                    if (user && user.hash == req.payload.hash) {
+                        successCallback(user);
+                    } else {
+                        if (failureCallback) {
+                            failureCallback();
+                        } else {
+                            sendJSONResponse(res, 401, {
+                                message: 'Your token is invalid.'
+                            })
+                        }
                     }
                 }
             })
@@ -38,7 +50,7 @@ module.exports.checkToken = function (req, res, callback) {
 
 module.exports.checkRank = function (req, res, requiredRank, callback) {
     this.checkToken(req, res, function (user) {
-        if (user.rank === requiredRank) {
+        if (user.rank >= requiredRank) {
             callback(user);
         } else {
             sendJSONResponse(res, 401, {
