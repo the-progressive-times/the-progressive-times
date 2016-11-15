@@ -17,7 +17,7 @@ module.exports.checkToken = function (req, res, successCallback, failureCallback
                 failureCallback();
             } else {
                 sendJSONResponse(res, 401, {
-                    message: 'Your token is invalid.'
+                    message: 'Authentication failed. Try again.'
                 })
             }
         } else {
@@ -27,7 +27,7 @@ module.exports.checkToken = function (req, res, successCallback, failureCallback
                         failureCallback();
                     } else {
                         sendJSONResponse(res, 401, {
-                            message: 'Your token is invalid.'
+                            message: 'Authentication failed. Try again.'
                         })
                     }
                 } else {
@@ -38,7 +38,7 @@ module.exports.checkToken = function (req, res, successCallback, failureCallback
                             failureCallback();
                         } else {
                             sendJSONResponse(res, 401, {
-                                message: 'Your token is invalid.'
+                                message: 'Authentication failed. Try again.'
                             })
                         }
                     }
