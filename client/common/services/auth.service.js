@@ -9,16 +9,16 @@
     AuthenticationService.$inject = ['$http', '$window', '$route'];
     function AuthenticationService($http, $window, $route) {
         this.saveToken = function (token) {
-            $window.localStorage['mean-token'] = token;
+            $window.localStorage['progtimes'] = token;
         };
 
         this.getToken = function () {
-            return $window.localStorage['mean-token']
+            return $window.localStorage['progtimes']
         };
 
         this.logout = function () {
             console.log('loggin out');
-            $window.localStorage.removeItem('mean-token')
+            $window.localStorage.removeItem('progtimes')
         };
 
         this.isLoggedIn = function () {

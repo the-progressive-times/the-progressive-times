@@ -13,7 +13,7 @@ var sendJSONResponse = function (res, status, content) {
 
 module.exports.create = function (req, res) {
     authenticate.checkRank(req, res, ranks.REPORTER, function (user) {
-        var passed = validate.validate([
+        var validation = validate.validate([
             {
                 value: req.body.title,
                 checks: {
@@ -30,7 +30,7 @@ module.exports.create = function (req, res) {
             }
         ]);
 
-        if (passed) {
+        if (validation.passed) {
             var article = new Article();
             article.title = req.body.title;
             article.author = user._id;
@@ -51,14 +51,16 @@ module.exports.create = function (req, res) {
         } else {
             sendJSONResponse(res, 400, {
                 message: 'Invalid input'
-            })
+            });
+
+            console.dir(validation.errors);
         }
     });
 };
 
 module.exports.edit = function (req, res) {
     authenticate.checkRank(req, res, ranks.REPORTER, function (user) {
-        var passed = validate.validate([
+        var validation = validate.validate([
             {
                 value: req.body.title,
                 checks: {
@@ -75,7 +77,7 @@ module.exports.edit = function (req, res) {
             }
         ]);
 
-        if (passed) {
+        if (validation.passed) {
             Article.findById(req.params.id, function (article) {
                 if (article.author == user._id) {
                     Article.findOneAndUpdate(req.params.id, {

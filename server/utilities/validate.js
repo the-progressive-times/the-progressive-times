@@ -3,26 +3,30 @@
  */
 
 module.exports.validate = function (check) {
-    var isValid = true;
+    var errors = [];
 
     for (var i = 0; i < check.length; i++) {
         var current = check[i];
 
         for (var key in current.checks) {
-            if (!isValid) {
-                return false;
-            }
-
             if (key === 'required') {
                 if (current.checks['required']) {
-                    isValid = !!current.value;
+                    if (!current.value) {
+                        errors.push('Field does not exist.');
+                    }
                 }
             } else if (key === 'minlength') {
-                isValid = current.value.length >= current.checks['minlength'];
+                if (current.value.length < current.checks['minlength']) {
+                    errors.push('Field is not long enough.')
+                }
             } else if (key === 'maxlength') {
-                isValid = current.value.length <= current.checks['maxlength'];
+                if (current.value.length > current.checks['maxlength']) {
+                    errors.push('Field is too long.')
+                }
             } else if (key === 'regex') {
-                isValid = current.checks['regex'].test(current.value);
+                if (!current.checks['regex'].test(current.value)) {
+                    errors.push('Field does not pass the regex.');
+                }
             } else if (key === 'matches') {
                 if (Array.isArray(current.checks['matches'])) {
                     var doesMatch = false;
@@ -34,13 +38,20 @@ module.exports.validate = function (check) {
                         }
                     }
 
-                    isValid = doesMatch;
+                    if (!doesMatch) {
+                        errors.push('Field is not a valid value.');
+                    }
                 } else {
-                    isValid = current.value == current.checks['matches'];
+                    if (current.value != current.checks['matches']) {
+                        errors.push('Fields do not match.');
+                    }
                 }
             }
         }
     }
 
-    return isValid;
+    return {
+        passed: errors.length === 0,
+        errors: errors
+    }
 };

@@ -10,19 +10,19 @@
                 <div layout-gt-sm="row">
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Full Name</label>
-                        <input ng-model="vm.user.fullname" name="fullname" required ng-pattern="/^[a-zA-Z0-9_\s]*$/"
-                               ng-minlength="3" ng-maxlength="30">
+                        <input ng-model="vm.user.fullname" name="fullname" required ng-pattern="/^[a-zA-Z0-9-_\s]*$/"
+                               ng-minlength="3" ng-maxlength="50">
                         <div ng-messages="registerForm.fullname.$error">
                             <div ng-message="required">This is required.</div>
                             <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
                                 Your name cannot contain special characters and must be greater than 3 characters and
-                                less than 30 characters.
+                                less than 50 characters.
                             </div>
                         </div>
                     </md-input-container>
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Username</label>
-                        <input ng-model="vm.user.username" name="username" required ng-pattern="/^[a-zA-Z0-9_]*$/"
+                        <input ng-model="vm.user.username" name="username" required ng-pattern="/^[a-zA-Z0-9_-]*$/"
                                ng-minlength="3" ng-maxlength="18">
                         <div ng-messages="registerForm.username.$error">
                             <div ng-message="required">This is required.</div>

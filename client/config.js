@@ -2,8 +2,8 @@
     angular.module('tpt')
         .config(config);
 
-    config.$inject = ['$routeProvider', '$mdThemingProvider'];
-    function config($routeProvider, $mdThemingProvider) {
+    config.$inject = ['$routeProvider', '$mdThemingProvider', '$locationProvider'];
+    function config($routeProvider, $mdThemingProvider, $locationProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: '/home/home.view.html',
@@ -36,8 +36,10 @@
             })
 
             .otherwise({
-                redirectTo: '/'
+                templateUrl: '404.html'
             });
+
+        $locationProvider.html5Mode(true);
 
         $mdThemingProvider
             .theme('default')

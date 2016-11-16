@@ -19,22 +19,22 @@ module.exports.register = function (req, res) {
     } else {
         User.findOne({'email': req.body.email}, function (err, userInfo) {
             if (userInfo) {
-                res.status(500);
+                res.status(400);
                 res.json({message: 'Email already registered'});
             } else {
                 User.findOne({'username': req.body.username}, function (err, userInfo) {
                     if (userInfo) {
-                        res.status(500);
+                        res.status(400);
                         res.json({message: 'Username already registered'});
                     } else {
-                        var passed = validate.validate([
+                        var validation = validate.validate([
                             {
                                 value: req.body.username,
                                 checks: {
                                     required: true,
                                     minlength: 3,
                                     maxlength: 18,
-                                    regex: /^[a-zA-Z0-9_]*$/
+                                    regex: /^[a-zA-Z0-9_-]*$/
                                 }
                             },
                             {
@@ -42,8 +42,8 @@ module.exports.register = function (req, res) {
                                 checks: {
                                     required: true,
                                     minlength: 3,
-                                    maxlength: 30,
-                                    regex: /^[a-zA-Z0-9_\s]*$/
+                                    maxlength: 50,
+                                    regex: /^[a-zA-Z0-9-_\s]*$/
                                 }
                             },
                             {
@@ -66,7 +66,7 @@ module.exports.register = function (req, res) {
                             }
                         ]);
 
-                        if (passed) {
+                        if (validation.passed) {
                             var user = new User();
                             user.username = req.body.username;
                             user.fullname = req.body.fullname;
@@ -86,7 +86,9 @@ module.exports.register = function (req, res) {
                         } else {
                             sendJSONResponse(res, 401, {
                                 message: 'Invalid input. Please don\'t mess with Angular\'s form validation.'
-                            })
+                            });
+
+                            console.dir(validation.errors);
                         }
                     }
                 });
@@ -136,7 +138,7 @@ module.exports.edit = function (req, res) {
                         message: 'Username already exists!'
                     })
                 } else {
-                    var passed = validate.validate([
+                    var validation = validate.validate([
                         {
                             value: req.body.username,
                             checks: {
@@ -167,7 +169,7 @@ module.exports.edit = function (req, res) {
                     ]);
 
                     authenticate.checkToken(req, res, function (user) {
-                        if (passed) {
+                        if (validation.passed) {
                             User.findByIdAndUpdate(req.payload._id, {
                                 $set: {
                                     email: req.body.email,
@@ -185,7 +187,9 @@ module.exports.edit = function (req, res) {
                         } else {
                             sendJSONResponse(res, 400, {
                                 message: 'Invalid input. Please don\'t mess with Angular\'s form validation.'
-                            })
+                            });
+
+                            console.dir(validation.errors);
                         }
                     })
                 }
@@ -195,7 +199,7 @@ module.exports.edit = function (req, res) {
 };
 
 module.exports.changePassword = function (req, res) {
-    var passed = validate.validate([
+    var validation = validate.validate([
         {
             value: req.body.confirm,
             checks: {
@@ -213,7 +217,7 @@ module.exports.changePassword = function (req, res) {
         }
     ]);
 
-    if (passed) {
+    if (validation.passed) {
         User.findById(req.payload._id, function (err, user) {
             if (user.checkPassword(req.body.current)) {
                 if (err) {
@@ -231,7 +235,7 @@ module.exports.changePassword = function (req, res) {
                     })
 
                 } else {
-                    sendJSONResponse(res, 500, {
+                    sendJSONResponse(res, 401, {
                         message: 'Unauthorized'
                     })
                 }
