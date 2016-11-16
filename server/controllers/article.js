@@ -87,14 +87,14 @@ module.exports.edit = function (req, res) {
 
         if (validation.passed) {
             // TODO: Stop repeating myself
-            Article.findById(req.params.id, function (article) {
-                if (article.author == user._id) {
+            Article.findById(req.params.id, function (err, article) {
+                if (String(article.author) === String(user._id)) {
                     Article.findOneAndUpdate(req.params.id, {
                         $set: {
                             title: req.body.title,
                             articleText: req.body.articleText
                         }
-                    }, function (article) {
+                    }, function (err, article) {
                         var articleLog = new ArticleLog();
                         articleLog.articleID = article._id;
                         articleLog.authorID = article.author;
@@ -105,7 +105,7 @@ module.exports.edit = function (req, res) {
                                 message: 'Successfully updated the article!'
                             })
                         });
-                    })
+                    });
                 } else {
                     authenticate.checkRank(req, res, ranks.EDITOR, function (user) {
                         Article.findOneAndUpdate(req.params.id, {
@@ -113,7 +113,7 @@ module.exports.edit = function (req, res) {
                                 title: req.body.title,
                                 articleText: req.body.articleText
                             }
-                        }, function (article) {
+                        }, function (err, article) {
                             var articleLog = new ArticleLog();
                             articleLog.articleID = article._id;
                             articleLog.authorID = article.author;
