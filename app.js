@@ -8,6 +8,7 @@ var passport = require('passport');
 
 require('./server/config/passport');
 require('./server/models/article');
+require('./server/models/auditlog');
 
 var routesApi = require('./server/routes/index');
 

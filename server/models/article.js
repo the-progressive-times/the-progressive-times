@@ -9,10 +9,6 @@ var articleSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
-    date: {
-        type: Date,
-        default: Date.now
-    },
     articleText: {
         type: String,
         required: true
