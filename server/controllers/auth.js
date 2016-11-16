@@ -42,8 +42,7 @@ module.exports.register = function (req, res) {
                                 checks: {
                                     required: true,
                                     minlength: 3,
-                                    maxlength: 50,
-                                    regex: /^[a-zA-Z0-9-_\s]*$/
+                                    maxlength: 50
                                 }
                             },
                             {
@@ -153,8 +152,7 @@ module.exports.edit = function (req, res) {
                             checks: {
                                 required: true,
                                 minlength: 3,
-                                maxlength: 30,
-                                regex: /^[a-zA-Z0-9_\s]*$/
+                                maxlength: 50
                             }
                         },
                         {
