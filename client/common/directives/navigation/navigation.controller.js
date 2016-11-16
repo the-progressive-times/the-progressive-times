@@ -17,12 +17,12 @@
             {
                 icon: 'home',
                 location: 'Home',
-                path: '#/'
+                path: '/'
             },
             {
                 icon: 'group',
                 location: 'Members',
-                path: '#/members'
+                path: '/members'
             }
         ];
 
@@ -70,7 +70,7 @@
                 vm.userNav.push({
                     icon: 'person',
                     location: 'Your Profile',
-                    path: '#/profile/' + vm.user.username
+                    path: '/profile/' + vm.user.username
                 });
 
                 fetchUser.getCurrentUser(function (user) {
@@ -80,23 +80,23 @@
                         vm.userNav.push({
                             icon: 'dashboard',
                             location: 'Admin Panel',
-                            path: '#/blogs'
+                            path: '/blogs'
                         });
                     }
 
-                    vm.userNav[0].path = '#/profile/' + vm.user.username;
+                    vm.userNav[0].path = '/profile/' + vm.user.username;
                 })
             } else {
                 vm.userNav = [];
                 vm.userNav.push({
                         icon: 'exit_to_app',
                         location: 'Login',
-                        path: '#/login'
+                        path: '/login'
                     },
                     {
                         icon: 'person_add',
                         location: 'Register',
-                        path: '#/register'
+                        path: '/register'
                     });
 
                 vm.user = {

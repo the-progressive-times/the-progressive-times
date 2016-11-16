@@ -4,7 +4,7 @@
 
 var mongoose = require('mongoose');
 var gracefulShutdown;
-var dbURI = 'mongodb://localhost:27017/starterkit';
+var dbURI = 'mongodb://localhost:27017/progtimes';
 if (process.env.NODE_ENV === 'production') {
     dbURI = process.env.MONGOLAB_URI;
 }
@@ -46,4 +46,4 @@ process.on('SIGTERM', function () {
     });
 });
 
-require('./userModel');
+require('./user');

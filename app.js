@@ -7,13 +7,12 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 
 require('./server/config/passport');
+require('./server/models/article');
+require('./server/models/auditlog');
 
 var routesApi = require('./server/routes/index');
 
 var app = express();
-
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -31,7 +30,6 @@ app.use(function (req, res) {
     res.sendFile(path.join(__dirname, 'client', 'index.html'));
 });
 
-
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
@@ -44,7 +42,7 @@ app.use(function (req, res, next) {
 app.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {
         res.status(401);
-        res.json({"message": err.name + ": " + err.message});
+        res.json({'message': err.name + ': ' + err.message});
     }
 });
 
@@ -69,6 +67,5 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;

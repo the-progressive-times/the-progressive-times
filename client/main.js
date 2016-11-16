@@ -3,5 +3,4 @@
  */
 (function () {
     angular.module('tpt', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate']);
-
 })();

@@ -4,38 +4,11 @@ var User = mongoose.model('User');
 var jwt = require('jsonwebtoken');
 var config = require('../config/config');
 var validate = require('../utilities/validate');
+var authenticate = require('../utilities/authenticate');
 
 var sendJSONResponse = function (res, status, content) {
     res.status(status);
     res.json(content);
-};
-
-var authenticate = function (req, res, callback) {
-    var auth = req.get('authorization').split(' ')[1];
-
-    jwt.verify(auth, config.secretKey, function (err, decoded) {
-        if (err) {
-            sendJSONResponse(res, 401, {
-                message: 'Your token is invalid.'
-            })
-        } else {
-            User.findById(decoded._id, function (err, user) {
-                if (err) {
-                    sendJSONResponse(res, 401, {
-                        message: 'Your token is invalid.'
-                    })
-                } else {
-                    if (user._id == req.payload._id && user.hash == req.payload.hash) {
-                        callback();
-                    } else {
-                        sendJSONResponse(res, 401, {
-                            message: 'Your token is invalid.'
-                        })
-                    }
-                }
-            })
-        }
-    })
 };
 
 module.exports.register = function (req, res) {
@@ -46,22 +19,22 @@ module.exports.register = function (req, res) {
     } else {
         User.findOne({'email': req.body.email}, function (err, userInfo) {
             if (userInfo) {
-                res.status(500);
+                res.status(400);
                 res.json({message: 'Email already registered'});
             } else {
                 User.findOne({'username': req.body.username}, function (err, userInfo) {
                     if (userInfo) {
-                        res.status(500);
+                        res.status(400);
                         res.json({message: 'Username already registered'});
                     } else {
-                        var passed = validate.validate([
+                        var validation = validate.validate([
                             {
                                 value: req.body.username,
                                 checks: {
                                     required: true,
                                     minlength: 3,
                                     maxlength: 18,
-                                    regex: /^[a-zA-Z0-9_]*$/
+                                    regex: /^[a-zA-Z0-9_-]*$/
                                 }
                             },
                             {
@@ -69,8 +42,7 @@ module.exports.register = function (req, res) {
                                 checks: {
                                     required: true,
                                     minlength: 3,
-                                    maxlength: 30,
-                                    regex: /^[a-zA-Z0-9_\s]*$/
+                                    maxlength: 50
                                 }
                             },
                             {
@@ -93,7 +65,7 @@ module.exports.register = function (req, res) {
                             }
                         ]);
 
-                        if (passed) {
+                        if (validation.passed) {
                             var user = new User();
                             user.username = req.body.username;
                             user.fullname = req.body.fullname;
@@ -113,7 +85,9 @@ module.exports.register = function (req, res) {
                         } else {
                             sendJSONResponse(res, 401, {
                                 message: 'Invalid input. Please don\'t mess with Angular\'s form validation.'
-                            })
+                            });
+
+                            console.dir(validation.errors);
                         }
                     }
                 });
@@ -163,7 +137,7 @@ module.exports.edit = function (req, res) {
                         message: 'Username already exists!'
                     })
                 } else {
-                    var passed = validate.validate([
+                    var validation = validate.validate([
                         {
                             value: req.body.username,
                             checks: {
@@ -178,8 +152,7 @@ module.exports.edit = function (req, res) {
                             checks: {
                                 required: true,
                                 minlength: 3,
-                                maxlength: 30,
-                                regex: /^[a-zA-Z0-9_\s]*$/
+                                maxlength: 50
                             }
                         },
                         {
@@ -193,8 +166,8 @@ module.exports.edit = function (req, res) {
                         }
                     ]);
 
-                    authenticate(req, res, function () {
-                        if (passed) {
+                    authenticate.checkToken(req, res, function (user) {
+                        if (validation.passed) {
                             User.findByIdAndUpdate(req.payload._id, {
                                 $set: {
                                     email: req.body.email,
@@ -212,7 +185,9 @@ module.exports.edit = function (req, res) {
                         } else {
                             sendJSONResponse(res, 400, {
                                 message: 'Invalid input. Please don\'t mess with Angular\'s form validation.'
-                            })
+                            });
+
+                            console.dir(validation.errors);
                         }
                     })
                 }
@@ -222,7 +197,7 @@ module.exports.edit = function (req, res) {
 };
 
 module.exports.changePassword = function (req, res) {
-    var passed = validate.validate([
+    var validation = validate.validate([
         {
             value: req.body.confirm,
             checks: {
@@ -240,7 +215,7 @@ module.exports.changePassword = function (req, res) {
         }
     ]);
 
-    if (passed) {
+    if (validation.passed) {
         User.findById(req.payload._id, function (err, user) {
             if (user.checkPassword(req.body.current)) {
                 if (err) {
@@ -248,7 +223,7 @@ module.exports.changePassword = function (req, res) {
                         message: 'Unexpected error.'
                     })
                 } else if (user) {
-                    authenticate(req, res, function () {
+                    authenticate.checkToken(req, res, function (user) {
                         user.setPassword(req.body.password);
                         user.save(function (err, user) {
                             sendJSONResponse(res, 200, {
@@ -258,7 +233,7 @@ module.exports.changePassword = function (req, res) {
                     })
 
                 } else {
-                    sendJSONResponse(res, 500, {
+                    sendJSONResponse(res, 401, {
                         message: 'Unauthorized'
                     })
                 }
@@ -272,7 +247,7 @@ module.exports.changePassword = function (req, res) {
 };
 
 module.exports.validateToken = function (req, res) {
-    authenticate(req, res, function () {
+    authenticate.checkToken(req, res, function (user) {
         sendJSONResponse(res, 200, {
             message: 'Your token is valid.'
         })

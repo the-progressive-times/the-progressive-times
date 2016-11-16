@@ -9,11 +9,14 @@ var auth = jwt({
 
 var authentication = require('../controllers/auth');
 var users = require('../controllers/user');
+var article = require('../controllers/article');
 
 router.post('/register', authentication.register);
 router.post('/login', authentication.login);
 router.post('/edit', auth, authentication.edit);
 router.post('/change_password', auth, authentication.changePassword);
+router.post('/create_article', auth, article.create);
+router.post('/edit_article/:id', auth, article.edit);
 
 router.get('/get_user/:id', users.getUser);
 router.get('/get_users', users.getUsers);
