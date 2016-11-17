@@ -6,7 +6,7 @@
                 <md-input-container class="md-block" flex-gt-sm>
                     <label>Username</label>
                     <md-icon class="material-icons">person</md-icon>
-                    <input ng-model="vm.user.username" required name="username" ng-pattern="/^[a-zA-Z0-9_]*$/"
+                    <input ng-model="vm.user.username" required name="username" ng-pattern="/^[a-zA-Z0-9_-]*$/"
                            ng-minlength="3" ng-maxlength="30">
                     <div ng-messages="editSettings.username.$error">
                         <div ng-message="required">This is required.</div>

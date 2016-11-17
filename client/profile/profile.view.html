@@ -10,6 +10,7 @@
                                 <span class="md-headline">{{vm.user.username}}</span>
                                 <span class="md-subhead">{{vm.user.fullname}}</span>
                                 <span class="md-subhead">{{vm.user.email}}</span>
+                                <span class="md-subhead" ng-if="vm.user.mustChangePass"><b>Password change required!</b></span>
                             </md-card-title-text>
                             <md-card-title-media>
                                 <div class="md-media-lg card-media hide-xs">
