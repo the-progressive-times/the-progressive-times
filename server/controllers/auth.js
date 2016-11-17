@@ -76,7 +76,9 @@ module.exports.adminRegister = function (req, res) {
                             user.save(function (err) {
                                 var token;
                                 token = user.generateJwt();
-                                var transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com'); //try this example
+                                // Ask jackson-y for the test gmail account.
+                                var transporter = nodemailer
+                                    .createTransport('smtps://theprogtimes%40gmail.com:[password here]@smtp.gmail.com');
 
                                 //******IF YOU PLAN ON USING YOUR OWN SERVER:******
 
@@ -103,14 +105,16 @@ module.exports.adminRegister = function (req, res) {
                                 // send mail with defined transport object
                                 transporter.sendMail(mailOptions, function (error, info) {
                                     if (error) {
-                                        return console.log(error);
+                                        sendJSONResponse(res, 500, {
+                                            message: 'Could not send the email.'
+                                        })
+                                    } else {
+                                        res.status(200);
+                                        res.json({
+                                            token: token
+                                        });
                                     }
                                     console.log('Message sent: ' + info.response);
-                                });
-
-                                res.status(200);
-                                res.json({
-                                    token: token
                                 });
                             });
                         } else {
@@ -261,7 +265,7 @@ module.exports.edit = function (req, res) {
                                 required: true,
                                 minlength: 3,
                                 maxlength: 18,
-                                regex: /^[a-zA-Z0-9_]*$/
+                                regex: /^[a-zA-Z0-9_-]*$/
                             }
                         },
                         {
@@ -338,6 +342,7 @@ module.exports.changePassword = function (req, res) {
                 } else if (user) {
                     authenticate.checkToken(req, res, function (user) {
                         user.setPassword(req.body.password);
+                        user.mustChangePass = false;
                         user.save(function (err, user) {
                             sendJSONResponse(res, 200, {
                                 message: 'You have successfully changed your password.'
