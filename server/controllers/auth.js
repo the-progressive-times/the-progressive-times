@@ -1,14 +1,106 @@
 var passport = require('passport');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-var jwt = require('jsonwebtoken');
 var config = require('../config/config');
 var validate = require('../utilities/validate');
 var authenticate = require('../utilities/authenticate');
+var ranks = require('../config/user-ranks');
+var crypto = require('crypto');
 
 var sendJSONResponse = function (res, status, content) {
     res.status(status);
     res.json(content);
+};
+
+module.exports.adminRegister = function (req, res) {
+    authenticate.checkRank(req, res, ranks.ADMIN, function (admin) {
+        User.findOne({'email': req.body.email}, function (err, userInfo) {
+            if (userInfo) {
+                res.status(400);
+                res.json({message: 'Email already registered'});
+            } else {
+                User.findOne({'username': req.body.username}, function (err, userInfo) {
+                    if (userInfo) {
+                        res.status(400);
+                        res.json({message: 'Username already registered'});
+                    } else {
+                        var validation = validate.validate([
+                            {
+                                value: req.body.username,
+                                checks: {
+                                    required: true,
+                                    minlength: 3,
+                                    maxlength: 18,
+                                    regex: /^[a-zA-Z0-9_-]*$/
+                                }
+                            },
+                            {
+                                value: req.body.fullname,
+                                checks: {
+                                    required: true,
+                                    minlength: 3,
+                                    maxlength: 50
+                                }
+                            },
+                            {
+                                value: req.body.email,
+                                checks: {
+                                    required: true,
+                                    minlength: 3,
+                                    maxlength: 100,
+                                    regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                                }
+                            },
+                            {
+                                value: req.body.rank,
+                                checks: {
+                                    required: true,
+                                    matches: ['1', '2', '3', '4']
+                                }
+                            }
+                        ]);
+
+                        if (validation.passed) {
+                            var user = new User();
+                            var tempPass = crypto.randomBytes(16).toString('hex');
+
+                            user.username = req.body.username;
+                            user.fullname = req.body.fullname;
+                            user.email = req.body.email;
+                            user.rank = req.body.rank;
+                            user.avatar = '';
+                            user.mustChangePass = true;
+                            user.setPassword(tempPass);
+
+                            user.save(function (err) {
+                                var token;
+                                token = user.generateJwt();
+                                /*
+                                 Send an email to the user containing their temporary pass. It should say something like
+
+                                 Welcome to The Progressive Times, {fullname}!
+
+                                 Your temporary password is: <b>{tempPass}</b>. When you log in, you will be required to change it.
+                                 */
+                                console.log('EMAILING USER!! Their temp password is: ' + tempPass); //Remove this when emailing works
+
+                                res.status(200);
+                                res.json({
+                                    token: token
+                                });
+                            });
+                        } else {
+                            sendJSONResponse(res, 401, {
+                                message: 'Invalid input. Please don\'t mess with Angular\'s form validation.'
+                            });
+
+                            console.dir(validation.errors);
+                        }
+                    }
+                });
+            }
+        });
+    })
 };
 
 module.exports.register = function (req, res) {
@@ -72,6 +164,7 @@ module.exports.register = function (req, res) {
                             user.email = req.body.email;
                             user.rank = 1;
                             user.avatar = '';
+                            user.mustChangePass = false;
                             user.setPassword(req.body.password);
 
                             user.save(function (err) {

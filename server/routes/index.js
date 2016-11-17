@@ -12,6 +12,7 @@ var users = require('../controllers/user');
 var article = require('../controllers/article');
 
 router.post('/register', authentication.register);
+router.post('/admin_register', auth, authentication.adminRegister);
 router.post('/login', authentication.login);
 router.post('/edit', auth, authentication.edit);
 router.post('/change_password', auth, authentication.changePassword);
