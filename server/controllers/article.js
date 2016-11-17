@@ -13,7 +13,7 @@ var sendJSONResponse = function (res, status, content) {
 };
 
 module.exports.create = function (req, res) {
-    authenticate.checkRank(req, res, ranks.REPORTER, function (user) {
+    authenticate.checkRank(req, res, ranks.MEMBER, function (user) {
         authenticate.passwordChangeRequired(req, res, function (user) {
             var validation = validate.validate([
                 {
@@ -69,7 +69,7 @@ module.exports.create = function (req, res) {
 };
 
 module.exports.edit = function (req, res) {
-    authenticate.checkRank(req, res, ranks.REPORTER, function (user) {
+    authenticate.checkRank(req, res, ranks.MEMBER, function (user) {
         authenticate.passwordChangeRequired(req, res, function (user) {
             var validation = validate.validate([
                 {

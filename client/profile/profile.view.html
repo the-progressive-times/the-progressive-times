@@ -18,14 +18,17 @@
                                 </div>
                             </md-card-title-media>
                         </md-card-title>
-                        <md-card-content class="hide-xs">
-                            <md-button class="md-primary" ng-click="vm.editProfile()">Edit Profile</md-button>
-                            <md-button class="md-warn" ng-click="vm.changePassword()">Change Password</md-button>
-                        </md-card-content>
-                        <md-card-actions layout="column" layout-align="start" class="hide-xl hide-lg hide-md hide-sm">
-                            <md-button class="md-primary" ng-click="vm.editProfile()">Edit Profile</md-button>
-                            <md-button class="md-warn" ng-click="vm.changePassword()">Change Password</md-button>
-                        </md-card-actions>
+                        <div ng-show="vm.currentUser.username === vm.user.username">
+                            <md-card-content class="hide-xs">
+                                <md-button class="md-primary" ng-click="vm.editProfile()">Edit Profile</md-button>
+                                <md-button class="md-warn" ng-click="vm.changePassword()">Change Password</md-button>
+                            </md-card-content>
+                            <md-card-actions layout="column" layout-align="start"
+                                             class="hide-xl hide-lg hide-md hide-sm">
+                                <md-button class="md-primary" ng-click="vm.editProfile()">Edit Profile</md-button>
+                                <md-button class="md-warn" ng-click="vm.changePassword()">Change Password</md-button>
+                            </md-card-actions>
+                        </div>
                     </md-card>
                 </md-tab>
             </md-tabs>
