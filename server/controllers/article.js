@@ -137,7 +137,7 @@ module.exports.edit = function (req, res) {
 };
 
 module.exports.getLogs = function (req, res) {
-    ArticleLog.find({articleID: req.params.id}).exec(function (err, logs) {
+    ArticleLog.find({articleID: req.params.id}).populate({path: 'authorID', select: 'username'}).exec(function (err, logs) {
         sendJSONResponse(res, 200, logs);
     });
 };
