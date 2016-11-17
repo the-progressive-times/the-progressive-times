@@ -19,8 +19,7 @@ var userSchema = new mongoose.Schema({
     hash: String,
     salt: String,
     avatar: String,
-    mustChangePass: Boolean,
-    article_log: {type: mongoose.Schema.Types.ObjectId, ref: 'Article'}
+    mustChangePass: Boolean
 });
 
 userSchema.methods.setPassword = function (password) {

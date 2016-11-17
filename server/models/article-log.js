@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
-var User = mongoose.model(User);
-var Article = mongoose.mongoose(Article);
+var User = mongoose.model('User');
 
 var auditLogSchema = new mongoose.Schema({
     articleID: {
