@@ -8,7 +8,13 @@
         </h2>
         <span flex></span>
         <md-button aria-label="Log out" ng-click="vm.logout()" ng-show="vm.isLoggedIn">Log out</md-button>
-        <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="vm.toggleUsernav()">
+        <md-button class="hide-xs hide-sm" aria-label="Log In" ng-href="/login" ng-hide="vm.isLoggedIn">Log In
+        </md-button>
+        <md-button class="hide-xs hide-sm" aria-label="Register" ng-href="/register" ng-hide="vm.isLoggedIn">Register
+        </md-button>
+        <md-button aria-label="Open phone interactions menu" class="md-icon-button"
+                   ng-class="{'hide-xl': !vm.isLoggedIn, 'hide-lg': !vm.isLoggedIn, 'hide-md': !vm.isLoggedIn}"
+                   ng-click="vm.toggleUsernav()">
             <md-icon class="material-icons" md-menu-origin>account_circle</md-icon>
         </md-button>
     </div>
