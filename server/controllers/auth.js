@@ -6,6 +6,7 @@ var validate = require('../utilities/validate');
 var authenticate = require('../utilities/authenticate');
 var ranks = require('../config/user-ranks');
 var crypto = require('crypto');
+var nodemailer = require('nodemailer');
 
 var sendJSONResponse = function (res, status, content) {
     res.status(status);
@@ -75,14 +76,39 @@ module.exports.adminRegister = function (req, res) {
                             user.save(function (err) {
                                 var token;
                                 token = user.generateJwt();
-                                /*
-                                 Send an email to the user containing their temporary pass. It should say something like
+                                var transporter = nodemailer.createTransport("SMTP", {
+                                    service: 'Gmail',
+                                    auth: {
+                                        user: "whatever@gmail.com", // This would be the server email
+                                        pass: "Nodemailer123" // This would be the password 
+                                    }
+                                });
+                                //******IF YOU PLAN ON USING YOUR OWN SERVER:******
 
-                                 Welcome to The Progressive Times, {fullname}!
+                                // var smtpTransport = nodemailer.createTransport('SMTP', {
+                                //     host: 'yourserver.com',
+                                //     port: 25,
+                                //     auth: {
+                                //         user: 'username',
+                                //         pass: 'password'
+                                //     }
+                                // });
 
-                                 Your temporary password is: <b>{tempPass}</b>. When you log in, you will be required to change it.
-                                 */
-                                console.log('EMAILING USER!! Their temp password is: ' + tempPass); //Remove this when emailing works
+                                var mailOptions = {
+                                    from: '"The Progressive Times" <info@progtimes.com>', // whatever address ya'll want to use
+                                    to: req.body.email, // recipient email
+                                    subject: 'Welcome to The Progressive Times, ' + req.body.fullname, // Subject line
+                                    text: 'Your temporary password is: <b>' + tempPass + '</b>. When you log in, you will be required to change it.', // body text
+                                    html: 'Your temporary password is: <b>' + tempPass + '</b>. When you log in, you will be required to change it.' // html body go nuts!
+                                };
+
+                                // send mail with defined transport object
+                                transporter.sendMail(mailOptions, function(error, info){
+                                    if(error){
+                                        return console.log(error);
+                                    }
+                                    console.log('Message sent: ' + info.response);
+                                });
 
                                 res.status(200);
                                 res.json({
