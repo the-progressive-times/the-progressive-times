@@ -76,11 +76,11 @@
                 fetchUser.getCurrentUser(function (user) {
                     vm.user = user;
 
-                    if (vm.user.rank === 3) {
+                    if (vm.user.rank === 4) {
                         vm.userNav.push({
                             icon: 'dashboard',
                             location: 'Admin Panel',
-                            path: '/blogs'
+                            path: '/admin/register'
                         });
                     }
 
