@@ -21,6 +21,7 @@ router.post('/edit_article/:id', auth, article.edit);
 
 router.get('/get_user/:id', users.getUser);
 router.get('/get_users', users.getUsers);
+router.get('/get_logs/:id', article.getLogs);
 
 router.post('/validate', auth, authentication.validateToken);
 

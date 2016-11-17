@@ -76,23 +76,19 @@ module.exports.adminRegister = function (req, res) {
                             user.save(function (err) {
                                 var token;
                                 token = user.generateJwt();
-                                var transporter = nodemailer.createTransport("SMTP", {
-                                    service: 'Gmail',
-                                    auth: {
-                                        user: "whatever@gmail.com", // This would be the server email
-                                        pass: "Nodemailer123" // This would be the password 
-                                    }
-                                });
+                                var transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com'); //try this example
+
                                 //******IF YOU PLAN ON USING YOUR OWN SERVER:******
 
-                                // var smtpTransport = nodemailer.createTransport('SMTP', {
-                                //     host: 'yourserver.com',
-                                //     port: 25,
+                                // var transporter = {
+                                //     host: 'smtp.gmail.com',
+                                //     port: 465,
+                                //     secure: true, // use SSL
                                 //     auth: {
-                                //         user: 'username',
-                                //         pass: 'password'
+                                //         user: 'user@gmail.com',
+                                //         pass: 'pass'
                                 //     }
-                                // });
+                                // };
 
                                 var mailOptions = {
                                     from: '"The Progressive Times" <info@progtimes.com>', // whatever address ya'll want to use

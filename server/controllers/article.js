@@ -131,3 +131,34 @@ module.exports.edit = function (req, res) {
         }
     })
 };
+
+module.exports.getLogs = function (req, res){
+    Article.find()
+}
+
+module.exports.getUser = function (req, res) {
+    User.findOne({_id: req.params.id}, function (err, user) {
+        if (user) {
+            user = scrub(user);
+            sendJSONResponse(res, 200, user);
+        } else {
+            User.findOne({username: req.params.id}, function (err, user) {
+                if (user) {
+                    user = scrub(user);
+                    sendJSONResponse(res, 200, user)
+                } else {
+                    User.findOne({email: req.params.id}, function (err, user) {
+                        if (user) {
+                            user = scrub(user);
+                            sendJSONResponse(res, 200, user)
+                        } else {
+                            sendJSONResponse(res, 404, {
+                                message: 'User not found.'
+                            })
+                        }
+                    })
+                }
+            })
+        }
+    });
+};
