@@ -94,13 +94,15 @@ module.exports.adminRegister = function (req, res) {
                                     from: '"The Progressive Times" <info@progtimes.com>', // whatever address ya'll want to use
                                     to: req.body.email, // recipient email
                                     subject: 'Welcome to The Progressive Times, ' + req.body.fullname, // Subject line
-                                    text: 'Your temporary password is: <b>' + tempPass + '</b>. When you log in, you will be required to change it.', // body text
-                                    html: 'Your temporary password is: <b>' + tempPass + '</b>. When you log in, you will be required to change it.' // html body go nuts!
+                                    text: 'Your temporary password is: <b>' + tempPass + '</b>. ' +
+                                    'When you log in, you will be required to change it.',
+                                    html: 'Your temporary password is: <b>' + tempPass + '</b>. ' +
+                                    'When you log in, you will be required to change it.'
                                 };
 
                                 // send mail with defined transport object
-                                transporter.sendMail(mailOptions, function(error, info){
-                                    if(error){
+                                transporter.sendMail(mailOptions, function (error, info) {
+                                    if (error) {
                                         return console.log(error);
                                     }
                                     console.log('Message sent: ' + info.response);
@@ -281,17 +283,13 @@ module.exports.edit = function (req, res) {
                         }
                     ]);
 
-                    authenticate.checkToken(req, res, function (user) {
+                    authenticate.passwordChangeRequired(req, res, function (user) {
                         if (validation.passed) {
-                            User.findByIdAndUpdate(req.payload._id, {
-                                $set: {
-                                    email: req.body.email,
-                                    username: req.body.username,
-                                    fullname: req.body.fullname
-                                }
-                            }, {
-                                new: true
-                            }, function (err, user) {
+                            user.email = req.body.email;
+                            user.username = req.body.username;
+                            user.fullname = req.body.fullname;
+
+                            user.save(function (err) {
                                 sendJSONResponse(res, 200, {
                                     message: 'You have successfully edited your profile.',
                                     token: user.generateJwt()
