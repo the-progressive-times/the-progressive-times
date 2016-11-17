@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Article = mongoose.model('Article');
 var ArticleLog = mongoose.model('ArticleLog');
+var AuditLog = mongoose.model('AuditLog');
 var validate = require('../utilities/validate');
 var authenticate = require('../utilities/authenticate');
 var ranks = require('../config/user-ranks');
@@ -133,32 +134,7 @@ module.exports.edit = function (req, res) {
 };
 
 module.exports.getLogs = function (req, res){
-    Article.find()
-}
-
-module.exports.getUser = function (req, res) {
-    User.findOne({_id: req.params.id}, function (err, user) {
-        if (user) {
-            user = scrub(user);
-            sendJSONResponse(res, 200, user);
-        } else {
-            User.findOne({username: req.params.id}, function (err, user) {
-                if (user) {
-                    user = scrub(user);
-                    sendJSONResponse(res, 200, user)
-                } else {
-                    User.findOne({email: req.params.id}, function (err, user) {
-                        if (user) {
-                            user = scrub(user);
-                            sendJSONResponse(res, 200, user)
-                        } else {
-                            sendJSONResponse(res, 404, {
-                                message: 'User not found.'
-                            })
-                        }
-                    })
-                }
-            })
-        }
+    AuditLog.find({articleID: req.params.id}).exec(function (err, logs) {
+        sendJSONResponse(res, 200, logs);
     });
 };
