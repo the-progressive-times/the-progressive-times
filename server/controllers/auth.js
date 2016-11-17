@@ -7,6 +7,7 @@ var authenticate = require('../utilities/authenticate');
 var ranks = require('../config/user-ranks');
 var crypto = require('crypto');
 var nodemailer = require('nodemailer');
+var emailCreds = require('../config/email-creds');
 
 var sendJSONResponse = function (res, status, content) {
     res.status(status);
@@ -76,9 +77,9 @@ module.exports.adminRegister = function (req, res) {
                             user.save(function (err) {
                                 var token;
                                 token = user.generateJwt();
-                                // Ask jackson-y for the test gmail account.
+                                // Ask @jackson-y for the email-creds.js file
                                 var transporter = nodemailer
-                                    .createTransport('smtps://theprogtimes%40gmail.com:[password here]@smtp.gmail.com');
+                                    .createTransport('smtps://' + emailCreds.username + ':' + emailCreds.password + '@smtp.gmail.com');
 
                                 //******IF YOU PLAN ON USING YOUR OWN SERVER:******
 
