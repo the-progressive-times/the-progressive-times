@@ -57,6 +57,9 @@
                         <span class="md-caption">{{user.userDesc}}</span>
                     </md-input-container>
                 </div>
+                <div layout="row" layout-sm="column" layout-align="space-around" ng-show="vm.loading">
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                </div>
                 <md-input-container class="md-block" flex-gt-sm>
                     <md-button class="md-raised md-primary" type="submit">Register</md-button>
                 </md-input-container>

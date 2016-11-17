@@ -10,6 +10,7 @@
     function RegisterController($location, authentication, $mdToast) {
         var vm = this;
         vm.user = {};
+        vm.loading = false;
         vm.ranks = [
             {
                 text: 'Administrator',
@@ -30,7 +31,10 @@
         ];
 
         vm.register = function () {
+            vm.loading = true;
             authentication.adminRegister(vm.user, function (response) {
+                vm.loading = false;
+
                 if (response.status == 200) {
                     $mdToast.show(
                         $mdToast.simple()

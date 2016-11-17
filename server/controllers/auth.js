@@ -181,7 +181,7 @@ module.exports.register = function (req, res) {
                                     required: true,
                                     matches: req.body.confirm,
                                     minlength: 8,
-                                    maxlength: 40
+                                    maxlength: 100
                                 }
                             }
                         ]);
