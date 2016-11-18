@@ -1,4 +1,30 @@
 /* line 1, ../compass/sass/style.scss */
 .text-center {
-    text-align: center;
+  text-align: center;
+}
+
+/* line 6, ../compass/sass/style.scss */
+article h1 {
+  font-size: 2em;
+}
+/* line 11, ../compass/sass/style.scss */
+article .user-area .avatar {
+  padding: 5px;
+}
+/* line 15, ../compass/sass/style.scss */
+article .user-area .avatar img {
+  max-width: 70%;
+  border-radius: 50%;
+}
+/* line 25, ../compass/sass/style.scss */
+article .user-area h2, article .user-area p {
+  color: #333;
+}
+/* line 29, ../compass/sass/style.scss */
+article .user-area h2 {
+  margin-bottom: 0 !important;
+}
+/* line 33, ../compass/sass/style.scss */
+article .user-area p {
+  margin-top: 0;
 }

@@ -1,0 +1,19 @@
+<div layout="row" layout-align="center start" layout-padding layout-wrap="">
+    <div flex="60" flex-xs="90" class="article">
+        <div class="user-area" layout="row">
+            <div flex="15" class="avatar">
+                <img src="http://placekitten.com/300/300">
+            </div>
+            <div flex class="author-area">
+                <h2>{{author.username}}</h2>
+                <p>{{author.fullname}}</p>
+            </div>
+        </div>
+        <md-content>
+            <h1>Hello, world!</h1>
+            <p>
+                <ng-transclude></ng-transclude>
+            </p>
+        </md-content>
+    </div>
+</div>

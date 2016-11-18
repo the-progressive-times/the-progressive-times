@@ -35,6 +35,10 @@
                 controllerAs: 'vm'
             })
 
+            .when('/article', {
+                templateUrl: '/article/article-list.view.html'
+            })
+
             .otherwise({
                 templateUrl: '404.html'
             });
