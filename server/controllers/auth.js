@@ -98,9 +98,9 @@ module.exports.adminRegister = function (req, res) {
                                     to: req.body.email, // recipient email
                                     subject: 'Welcome to The Progressive Times, ' + req.body.fullname, // Subject line
                                     text: 'Your temporary password is: <b>' + tempPass + '</b>. ' +
-                                    'When you log in, you will be required to change it.',
+                                    'When you log in, you will be required to change it.  Please visit <a href="http://www.progtimes.com/profile/' + req.body.username + '"></a> to immediately update your password.',
                                     html: 'Your temporary password is: <b>' + tempPass + '</b>. ' +
-                                    'When you log in, you will be required to change it.'
+                                    'When you log in, you will be required to change it.  Please visit <a href="http://www.progtimes.com/profile/' + req.body.username + '"></a> to immediately update your password.'
                                 };
 
                                 // send mail with defined transport object
