@@ -131,3 +131,21 @@ module.exports.edit = function (req, res) {
         }
     })
 };
+
+module.exports.getArticle = function (req, res) {
+    Article.findById(req.params.id, function (err, article) {
+        if (article) {
+            console.log(article);
+            console.log('yup');
+            sendJSONResponse(res, 200, article);
+        } else if (err) {
+            sendJSONResponse(res, 500, {
+                message: 'Internal server error.'
+            })
+        } else {
+            sendJSONResponse(res, 404, {
+                message: 'Article not found.'
+            })
+        }
+    })
+};

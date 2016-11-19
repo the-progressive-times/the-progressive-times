@@ -18,6 +18,7 @@ router.post('/change_password', auth, authentication.changePassword);
 router.post('/create_article', auth, article.create);
 router.post('/edit_article/:id', auth, article.edit);
 
+router.get('/get_article/:id', article.getArticle);
 router.get('/get_user/:id', users.getUser);
 router.get('/get_users', users.getUsers);
 

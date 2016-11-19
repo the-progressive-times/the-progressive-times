@@ -39,6 +39,12 @@
                 templateUrl: '/article/article-list.view.html'
             })
 
+            .when('/article/new', {
+                templateUrl: '/article/new-article/new-article.view.html',
+                controller: 'NewArticleController',
+                controllerAs: 'vm'
+            })
+
             .otherwise({
                 templateUrl: '404.html'
             });
