@@ -9,12 +9,17 @@
     ProfileController.$inject = ['fetchUser', '$routeParams', '$mdDialog'];
     function ProfileController(fetchUser, $routeParams, $mdDialog) {
         var vm = this;
+        vm.currentUser = {};
         vm.user = {};
         vm.editProfile = editProfile;
         vm.changePassword = changePassword;
 
         fetchUser.getUser($routeParams.user, function (response) {
             vm.user = response;
+        });
+
+        fetchUser.getCurrentUser(function (user) {
+            vm.currentUser = user;
         });
 
         function editProfile() {

@@ -45,6 +45,12 @@
                 controllerAs: 'vm'
             })
 
+            .when('/admin/register', {
+                templateUrl: '/admin/register/register.view.html',
+                controller: 'AdminRegisterController',
+                controllerAs: 'vm'
+            })
+
             .otherwise({
                 templateUrl: '404.html'
             });

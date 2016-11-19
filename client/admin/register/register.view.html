@@ -1,0 +1,69 @@
+<div layout="row" layout-align="center center" layout-margin flex>
+    <md-card flex="40" flex-sm="80" flex-xs="90">
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Register</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <form ng-submit="vm.register()" name="registerForm">
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Full Name</label>
+                        <input ng-model="vm.user.fullname" name="fullname" required
+                               ng-minlength="3" ng-maxlength="50">
+                        <div ng-messages="registerForm.fullname.$error">
+                            <div ng-message="required">This is required.</div>
+                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                Your name must be greater than 3 characters and less than 50 characters.
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Username</label>
+                        <input ng-model="vm.user.username" name="username" required ng-pattern="/^[a-zA-Z0-9_-]*$/"
+                               ng-minlength="3" ng-maxlength="18">
+                        <div ng-messages="registerForm.username.$error">
+                            <div ng-message="required">This is required.</div>
+                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                Your username cannot contain special characters and must be greater than 3 characters
+                                and less than 30 characters.
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Email</label>
+                        <input ng-model="vm.user.email" type="email" required name="email" ng-pattern="/^.+@.+\..+$/"
+                               ng-minlength="10" ng-maxlength="100">
+                        <div ng-messages="registerForm.email.$error">
+                            <div ng-message="required">This is required.</div>
+                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                Your email must be between 10 and 100 characters long and look like an e-mail address.
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Rank</label>
+                        <md-select ng-model="vm.user.rank" required name="rank">
+                            <md-option ng-repeat="rank in vm.ranks" value="{{rank.numeric}}">
+                                {{rank.text}}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="registerForm.type.$error">
+                            <div ng-message="required">This is required.</div>
+                        </div>
+                        <span class="md-caption">{{user.userDesc}}</span>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-sm="column" layout-align="space-around" ng-show="vm.loading">
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                </div>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <md-button class="md-raised md-primary" type="submit">Register</md-button>
+                </md-input-container>
+            </form>
+        </md-card-content>
+    </md-card>
+</div>

@@ -71,6 +71,23 @@
             })
         };
 
+        this.adminRegister = function (user, callback) {
+            var auth = this;
+
+            return $http({
+                method: 'POST',
+                url: '/api/admin_register',
+                headers: {
+                    authorization: 'Bearer ' + auth.getToken()
+                },
+                data: user
+            }).then(function (response) {
+                callback(response);
+            }, function (response) {
+                callback(response);
+            })
+        };
+
         this.login = function (user, callback) {
             var auth = this;
 

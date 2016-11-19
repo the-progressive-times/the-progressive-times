@@ -48,6 +48,18 @@ module.exports.checkToken = function (req, res, successCallback, failureCallback
     })
 };
 
+module.exports.passwordChangeRequired = function (req, res, successCallback) {
+    this.checkToken(req, res, function (user) {
+        if (user.mustChangePass) {
+            sendJSONResponse(res, 401, {
+                message: 'You must change your password before performing this action.'
+            })
+        } else {
+            successCallback(user);
+        }
+    })
+};
+
 module.exports.checkRank = function (req, res, requiredRank, callback) {
     this.checkToken(req, res, function (user) {
         if (user.rank >= requiredRank) {
