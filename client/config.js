@@ -46,12 +46,25 @@
             })
 
             .when('/article', {
-                templateUrl: '/article/article-list.view.html'
+                templateUrl: '/article/article-list.view.html',
+                controller: 'ArticleListController',
+                controllerAs: 'vm'
             })
 
             .when('/article/new', {
                 templateUrl: '/article/new-article/new-article.view.html',
                 controller: 'NewArticleController',
+                controllerAs: 'vm',
+                resolve: {
+                    access: ['Access', function (Access) {
+                        return Access.hasPermission(2);
+                    }]
+                }
+            })
+
+            .when('/article/:id', {
+                templateUrl: '/article/article-view/article.view.html',
+                controller: 'ArticleController',
                 controllerAs: 'vm'
             })
 

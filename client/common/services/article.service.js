@@ -13,6 +13,18 @@
                 },
                 data: article
             })
+        };
+
+        this.getArticle = function (id) {
+            return $http.get('/api/get_article/' + id);
+        };
+
+        this.getArticles = function () {
+            return $http.get('/api/get_articles');
+        };
+
+        this.getLogs = function (id) {
+            return $http.get('/api/get_logs/' + id);
         }
     }
 })();

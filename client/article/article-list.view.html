@@ -1,4 +1,5 @@
-<article author="vm.user" title="Hello, world!">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias consequatur, cupiditate, eos et explicabo facere fugiat illo ipsum molestias mollitia non pariatur quia quo quos repellendus repudiandae temporibus totam.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore est expedita iste laudantium magni, maiores nemo nisi nobis nostrum numquam rerum similique unde voluptates? Culpa dolores doloribus excepturi optio quo?</p>
-</article>
+<div ng-repeat="article in vm.articles | orderBy:'-logs[0].timestamp'">
+    <article article="article">
+        <p>{{article.articleText}}</p>
+    </article>
+</div>

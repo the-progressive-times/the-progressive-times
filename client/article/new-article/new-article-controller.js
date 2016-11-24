@@ -9,8 +9,8 @@
         vm.submit = function () {
             article.createArticle(vm.article)
                 .then(function (response) {
-                    $location.path('/article/' + response.data._id);
-                })
+                    $location.path('/article/' + response.data.article._id);
+                });
         }
     }
 })();

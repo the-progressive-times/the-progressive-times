@@ -1,19 +1,25 @@
-<div layout="row" layout-align="center start" layout-padding layout-wrap="">
+<div layout="row" layout-align="center start" layout-padding layout-wrap="" class="article">
     <div flex="60" flex-xs="90" class="article">
         <div class="user-area" layout="row">
             <div flex="15" class="avatar">
                 <img src="http://placekitten.com/300/300">
             </div>
             <div flex class="author-area">
-                <h2>{{author.username}}</h2>
-                <p>{{author.fullname}}</p>
+                <h2>{{article.user.username}}</h2>
+                <p>{{article.user.fullname}}</p>
             </div>
         </div>
         <md-content>
-            <h1>Hello, world!</h1>
+            <h1><a href="/article/{{article._id}}">{{article.title}}</a></h1>
             <p>
                 <ng-transclude></ng-transclude>
             </p>
+            <div class="text-right log-area">
+                <p ng-repeat="log in article.logs | orderBy:'-timestamp'">
+                    {{log.eventName}} {{log.timestamp | date:'medium'}}
+                </p>
+            </div>
         </md-content>
+        <hr>
     </div>
 </div>

@@ -8,7 +8,7 @@
             transclude: true,
             templateUrl: 'article/directives/article/article.template.html',
             scope: {
-                author: '='
+                article: '='
             }
         }
     }

@@ -1,1 +1,40 @@
-<article
+<div layout="row" layout-align="center start" layout-padding layout-wrap="" class="article">
+    <div flex="60" flex-xs="90" class="article">
+        <div class="user-area" layout="row">
+            <div flex="15" class="avatar">
+                <img src="http://placekitten.com/300/300">
+            </div>
+            <div flex class="author-area">
+                <h2>{{vm.article.user.username}}</h2>
+                <p>{{vm.article.user.fullname}}</p>
+            </div>
+        </div>
+        <md-content>
+            <h1>{{vm.article.title}}</h1>
+
+            <div>
+                {{vm.article.articleText}}
+            </div>
+
+            <div layout="row">
+                <div flex="30">
+                    <md-button class="md-primary" ng-href="/article/{{vm.article._id}}/edit">
+                        <md-icon class="material-icons">edit</md-icon>
+                    </md-button>
+                    <md-button class="md-warn" ng-click="vm.delete()">
+                        <md-icon class="material-icons">delete</md-icon>
+                    </md-button>
+                </div>
+
+                <div class="text-right log-area" flex>
+                    <p ng-repeat="log in vm.article.logs | orderBy:'-timestamp'">
+                        {{log.eventName}} {{log.timestamp | date:'medium'}}
+                    </p>
+                </div>
+            </div>
+        </md-content>
+        <hr>
+    </div>
+</div>
+
+<h2>Discussion Section</h2>

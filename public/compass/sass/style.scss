@@ -2,9 +2,24 @@
   text-align: center;
 }
 
-article {
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.article {
   h1 {
     font-size: 2em;
+  }
+
+  .log-area {
+    p {
+      font-size: 12px;
+      color: #333;
+    }
   }
 
   .user-area {

@@ -9,8 +9,7 @@
             <form ng-submit="vm.submit()" name="articleForm">
                 <md-input-container class="md-block" flex>
                     <label>Article Title</label>
-                    <input ng-model="vm.article.title" name="title" required ng-pattern="/^[a-zA-Z0-9_\s.!?:]*$/"
-                           ng-minlength="3" ng-maxlength="60">
+                    <input ng-model="vm.article.title" name="title" required ng-minlength="3" ng-maxlength="60">
                     <div ng-messages="articleForm.title.$error">
                         <div ng-message="required">This is required.</div>
                         <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
