@@ -12,7 +12,7 @@
 </head>
 <body ng-app="tpt">
 
-<div layout="column" layout-fill class="content-wrapper" ng-controller="MainController">
+<div layout="column" layout-fill class="content-wrapper">
     <navigation></navigation>
 
     <md-content flex>
@@ -42,16 +42,24 @@
 <script src="profile/edit/edit.controller.js"></script>
 <script src="profile/password/password.controller.js"></script>
 <script src="members/members.controller.js"></script>
+<script src="article/article-list.controller.js"></script>
+<script src="article/new-article/new-article-controller.js"></script>
+<script src="article/article-list.controller.js"></script>
+<script src="article/article-view/article.controller.js"></script>
 <script src="admin/register/register.controller.js"></script>
 
 <!--Directives-->
 <script src="common/directives/navigation/navigation.directive.js"></script>
 <script src="common/directives/compare-to.js"></script>
+<script src="article/directives/article/article.directive.js"></script>
 
 <!--Services-->
 <script src="common/services/auth.service.js"></script>
+<script src="common/services/article.service.js"></script>
 
 <!--Factories-->
-<script src="common/factories/fetch-user.js"></script>
+<script src="common/factories/fetch-user.factory.js"></script>
+<script src="common/factories/fetch-article.factory.js"></script>
+<script src="common/factories/access.factory.js"></script>
 </body>
 </html>

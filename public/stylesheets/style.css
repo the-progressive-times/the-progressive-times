@@ -1,4 +1,51 @@
 /* line 1, ../compass/sass/style.scss */
 .text-center {
-    text-align: center;
+  text-align: center;
+}
+
+/* line 5, ../compass/sass/style.scss */
+.text-left {
+    text-align: left;
+}
+
+/* line 9, ../compass/sass/style.scss */
+.text-right {
+    text-align: right;
+}
+
+/* line 14, ../compass/sass/style.scss */
+.article h1 {
+  font-size: 2em;
+}
+
+/* line 19, ../compass/sass/style.scss */
+.article .log-area p {
+    font-size: 12px;
+    color: #333;
+}
+
+/* line 26, ../compass/sass/style.scss */
+.article .user-area .avatar {
+  padding: 5px;
+}
+
+/* line 30, ../compass/sass/style.scss */
+.article .user-area .avatar img {
+  max-width: 70%;
+  border-radius: 50%;
+}
+
+/* line 40, ../compass/sass/style.scss */
+.article .user-area h2, .article .user-area p {
+  color: #333;
+}
+
+/* line 44, ../compass/sass/style.scss */
+.article .user-area h2 {
+  margin-bottom: 0 !important;
+}
+
+/* line 48, ../compass/sass/style.scss */
+.article .user-area p {
+  margin-top: 0;
 }

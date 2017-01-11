@@ -44,7 +44,7 @@ module.exports.create = function (req, res) {
                     creationLog.authorID = article.author;
                     creationLog.eventName = 'Created';
 
-                    creationLog.save(function (err) {
+                    creationLog.save(function (err, article) {
                         if (err) {
                             console.log(err);
                             sendJSONResponse(res, 500, {
@@ -52,7 +52,8 @@ module.exports.create = function (req, res) {
                             });
                         } else {
                             sendJSONResponse(res, 200, {
-                                message: 'Success! The article was posted.'
+                                message: 'Success! The article was posted.',
+                                article: article
                             })
                         }
                     });
@@ -124,7 +125,8 @@ module.exports.edit = function (req, res) {
 
                                 articleLog.save(function (err) {
                                     sendJSONResponse(res, 200, {
-                                        message: 'Successfully updated the article!'
+                                        message: 'Successfully updated the article!',
+                                        article: article
                                     })
                                 });
                             })
@@ -133,6 +135,30 @@ module.exports.edit = function (req, res) {
                 })
             }
         })
+    })
+};
+
+module.exports.getArticle = function (req, res) {
+    Article.findById(req.params.id, function (err, article) {
+        if (article) {
+            console.log(article);
+            console.log('yup');
+            sendJSONResponse(res, 200, article);
+        } else if (err) {
+            sendJSONResponse(res, 500, {
+                message: 'Internal server error.'
+            })
+        } else {
+            sendJSONResponse(res, 404, {
+                message: 'Article not found.'
+            })
+        }
+    });
+};
+
+module.exports.getAllArticles = function (req, res) {
+    Article.find(function (err, articles) {
+        sendJSONResponse(res, 200, articles);
     })
 };
 

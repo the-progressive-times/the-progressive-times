@@ -1,0 +1,40 @@
+<div layout="row" layout-align="center center" flex>
+    <md-card flex="60" flex-sm="80" flex-xs="90">
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Create an Article</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <form ng-submit="vm.submit()" name="articleForm">
+                <md-input-container class="md-block" flex>
+                    <label>Article Title</label>
+                    <input ng-model="vm.article.title" name="title" required ng-minlength="3" ng-maxlength="60">
+                    <div ng-messages="articleForm.title.$error">
+                        <div ng-message="required">This is required.</div>
+                        <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                            Your name cannot contain special characters and must be greater than 3 characters and
+                            less than 60 characters.
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Thread Content</label>
+                    <textarea ng-model="vm.article.articleText" name="content" md-maxlength="3000" md-minlength="30"
+                              ng-minlength="30" ng-maxlength="3000" rows="8" required md-select-on-focus></textarea>
+                    <div ng-messages="articleForm.content.$error">
+                        <div ng-message="required">This is required.</div>
+                        <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                            Your thread should be at least 30 characters and less than 3000.
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <md-button class="md-primary md-raised" type="submit"
+                               ng-disabled="articleForm.content.$invalid || articleForm.title.$invalid">Create Article
+                    </md-button>
+                </md-input-container>
+            </form>
+        </md-card-content>
+    </md-card>
+</div>

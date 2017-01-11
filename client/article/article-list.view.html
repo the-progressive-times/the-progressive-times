@@ -1,0 +1,5 @@
+<div ng-repeat="article in vm.articles | orderBy:'-logs[0].timestamp'">
+    <article article="article">
+        <p>{{article.articleText}}</p>
+    </article>
+</div>

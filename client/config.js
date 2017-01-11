@@ -14,13 +14,23 @@
             .when('/register', {
                 templateUrl: '/auth/register/register.view.html',
                 controller: 'RegisterController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    access: ['Access', function (Access) {
+                        return Access.shouldBeLoggedIn(false);
+                    }]
+                }
             })
 
             .when('/login', {
                 templateUrl: '/auth/login/login.view.html',
                 controller: 'LoginController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    access: ['Access', function (Access) {
+                        return Access.shouldBeLoggedIn(false);
+                    }]
+                }
             })
 
             .when('/members', {
@@ -35,10 +45,38 @@
                 controllerAs: 'vm'
             })
 
+            .when('/article', {
+                templateUrl: '/article/article-list.view.html',
+                controller: 'ArticleListController',
+                controllerAs: 'vm'
+            })
+
+            .when('/article/new', {
+                templateUrl: '/article/new-article/new-article.view.html',
+                controller: 'NewArticleController',
+                controllerAs: 'vm',
+                resolve: {
+                    access: ['Access', function (Access) {
+                        return Access.hasPermission(2);
+                    }]
+                }
+            })
+
+            .when('/article/:id', {
+                templateUrl: '/article/article-view/article.view.html',
+                controller: 'ArticleController',
+                controllerAs: 'vm'
+            })
+
             .when('/admin/register', {
                 templateUrl: '/admin/register/register.view.html',
                 controller: 'AdminRegisterController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    access: ['Access', function (Access) {
+                        return Access.hasPermission(4);
+                    }]
+                }
             })
 
             .otherwise({
